@@ -11,33 +11,33 @@ const app = express();
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });
-app.listen(3000, function () {
-    console.log("Server is running on localhost3000");
-});
+// app.listen(3000, function () {
+//     console.log("Server is running on localhost3000");
+// });
 
-const { Client } = require("pg");
-require("dotenv").config();
+// const { Client } = require("pg");
+// require("dotenv").config();
 
-const client = new Client({
-    user: process.env.PGUSER,
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    password: process.env.PGPASSWORD,
-    port: process.env.PGPORT
-});
+// const client = new Client({
+//     user: process.env.PGUSER,
+//     host: process.env.PGHOST,
+//     database: process.env.PGDATABASE,
+//     password: process.env.PGPASSWORD,
+//     port: process.env.PGPORT
+// });
 
-client.connect(err => {
-    if (err) {
-      console.error('connection error', err.stack)
-    } else {
-      console.log('connected')
-      for(let i = 1; i <= 20; i++) {
-        getByAnimalID(i);
-      }
-      getByAnimalName("Bison bison");
-      getByAnimalsByStateName("Manipur");
-    }
-});
+// client.connect(err => {
+//     if (err) {
+//       console.error('connection error', err.stack)
+//     } else {
+//       console.log('connected')
+//       for(let i = 1; i <= 20; i++) {
+//         getByAnimalID(i);
+//       }
+//       getByAnimalName("Bison bison");
+//       getByAnimalsByStateName("Manipur");
+//     }
+// });
 
 function printResults(rows) {
     for(let i = 0; i < rows.length; i++) {
