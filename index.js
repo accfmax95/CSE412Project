@@ -31,18 +31,87 @@ client.connect(err => {
       console.error('connection error', err.stack)
     } else {
       console.log('connected')
-      getByAnimalID(1);
+      for(let i = 1; i <= 20; i++) {
+        getByAnimalID(i);
+      }
+      getByAnimalName("Bison bison");
+      getByAnimalsByStateName("Manipur");
     }
 });
 
+function printResults(rows) {
+    for(let i = 0; i < rows.length; i++) {
+        console.log("---------------------------------------");
+        console.log("\nID: " + rows[i].animal_id);
+        console.log("\nName: " + rows[i].scientific_name);
+        console.log("\nLife Span: " + rows[i].life_span);
+        console.log("\nPopulation: " + rows[i].population);
+        console.log("\City: " + rows[i].city_name);
+        console.log("\nState: " + rows[i].state_name);
+    }
+}
+
 async function getByAnimalID(animalID) {
-  const query = `SELECT * FROM animal WHERE animal_id = $1`;
+
+    const query = `SELECT a.animal_id, a.scientific_name, a.life_span, ad.population, c.city_name,
+                    s.state_name
+                    FROM Animal AS a
+                    LEFT JOIN AnimalDetails AS ad
+                    ON a.animal_id = ad.animal_id
+                    LEFT JOIN City AS c
+                    ON ad.city_id = c.city_id
+                    LEFT JOIN State AS s
+                    ON c.state_id = s.state_id
+                    WHERE a.animal_id=$1`;
   const id = [animalID];
   return client.query(query, id, (err, res) => {
     if (err) {
         console.log("Error!  " + err.stack);
     } else {
-        console.log("Result: " + JSON.stringify(res.rows));
+        printResults(res.rows);
+    }
+    });
+}
+
+async function getByAnimalName(animal_name) {
+
+    const query = `SELECT a.animal_id, a.scientific_name, a.life_span, ad.population, c.city_name,
+                    s.state_name
+                    FROM Animal AS a
+                    LEFT JOIN AnimalDetails AS ad
+                    ON a.animal_id = ad.animal_id
+                    LEFT JOIN City AS c
+                    ON ad.city_id = c.city_id
+                    LEFT JOIN State AS s
+                    ON c.state_id = s.state_id
+                    WHERE a.scientific_name=$1`;
+  const id = [animal_name];
+  return client.query(query, id, (err, res) => {
+    if (err) {
+        console.log("Error!  " + err.stack);
+    } else {
+        printResults(res.rows);    }
+    });
+}
+
+async function getByAnimalsByStateName(state_name) {
+
+    const query = `SELECT a.animal_id, a.scientific_name, a.life_span, ad.population, c.city_name,
+                    s.state_name
+                    FROM Animal AS a
+                    LEFT JOIN AnimalDetails AS ad
+                    ON a.animal_id = ad.animal_id
+                    LEFT JOIN City AS c
+                    ON ad.city_id = c.city_id
+                    LEFT JOIN State AS s
+                    ON c.state_id = s.state_id
+                    WHERE s.state_name=$1`;
+  const id = [state_name];
+  return client.query(query, id, (err, res) => {
+    if (err) {
+        console.log("Error!  " + err.stack);
+    } else {
+        printResults(res.rows);
     }
     });
 }
