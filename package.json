@@ -2,10 +2,10 @@
   "name": "cse412project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "public/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node public/index.js"
   },
   "repository": {
     "type": "git",
