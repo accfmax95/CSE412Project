@@ -1,0 +1,52 @@
+/* 
+Color Palette:
+    Green: #74974f;
+    Red: #e3473a;
+    White: #f3e8d8;
+    Grey: #242721;
+*/
+
+body
+{
+    background-color: #242721;
+    font-family: Arial, sans-serif;
+}
+
+#title_div h1 
+{
+    color: #e3473a;
+}
+
+#title_div
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    padding-left: 50px;
+    font-size: 020px;
+}
+
+#titleName_div
+{
+    color: #f3e8d8;
+    display: flex;
+    gap: 50px;
+    padding-left: 50px;
+    font-size: 13px;
+}
+
+#content
+{
+    display: flex;
+    font-size: 20px;
+    outline: #e3473a;
+    color: #f3e8d8;
+}
+
+.boxes
+{
+    width: 50%;
+    border: 1px solid #74974f;
+	padding: 10px;
+	box-sizing: border-box;
+}
