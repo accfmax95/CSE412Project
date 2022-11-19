@@ -6,15 +6,24 @@ Color Palette:
     Grey: #242721;
 */
 
+:root
+{
+    --black:#252224;
+    --white: #bfc3c5;
+    --pink: #d66275;
+    --brown: #b9964a;
+}
+
 body
 {
-    background-color: #242721;
+    background-color: var(--black);
     font-family: Arial, sans-serif;
 }
 
 #title_div h1 
 {
-    color: #e3473a;
+    color: var(--pink);
+    text-shadow:1px 1px 0px var(--pink), 1px 1px 15px var(--pink);
 }
 
 #title_div
@@ -28,7 +37,7 @@ body
 
 #titleName_div
 {
-    color: #f3e8d8;
+    color: var(--white);
     display: flex;
     gap: 50px;
     padding-left: 50px;
@@ -39,14 +48,44 @@ body
 {
     display: flex;
     font-size: 20px;
-    outline: #e3473a;
-    color: #f3e8d8;
+    color: var(--white);
+
 }
 
 .boxes
 {
     width: 50%;
-    border: 1px solid #74974f;
+    border: 1px solid var(--white);
 	padding: 10px;
 	box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0px
+}
+
+#query_p
+{
+    color: var(--brown);
+}
+
+select
+{
+    flex: 1;
+    width: 125px;
+    padding: 0 1em;
+    color: var(--brown);
+    background-color: var(--white);
+    background-image: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    outline-color: var(--brown);
+}
+
+.select option
+{
+    background: var(--white);
+    color: var(--black);
+    border-bottom: 10em;
 }

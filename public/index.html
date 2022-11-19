@@ -21,10 +21,25 @@
     </header>
     <div id="content">
         <div class="boxes">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima porro omnis ipsa tempora soluta ullam corporis at nulla. Quo, adipisci veritatis! Unde excepturi totam esse repudiandae laudantium porro sunt pariatur!</p>
+            <p id="query_p">Query Type:</p>
+            <div class="select">
+                <select name="queryForm" id="querySelect">
+                    <option value="0" selected disabled hidden>Select</option>
+                    <option value="1">ID</option>
+                    <option value="2">Name</option>
+                    <option value="3">State</option>
+                    <option value="4">City</option>
+                  </select>
+            </div>
+            <div class="queryInput">
+                <div id="query_ID" style="display: none;"> ID</div>
+                <div id="query_Name" style="display: none;"> Name</div>
+                <div id="query_State"style="display: none;"> State</div>
+                <div id="query_City" style="display: none;"> City</div>
+            </div>
         </div>
         <div class="boxes">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima porro omnis ipsa tempora soluta ullam corporis at nulla. Quo, adipisci veritatis! Unde excepturi totam esse repudiandae laudantium porro sunt pariatur! Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi incidunt rerum inventore id veritatis odit, fugiat beatae illum quisquam rem dolore maiores nam minima, illo vero ea, quidem consequuntur eaque.</p>
+
         </div>
     </div>
     <script type="module" src="index.js"></script>
