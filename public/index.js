@@ -70,8 +70,8 @@ async function getByAnimalID(animalID) {
     if (err) {
         console.log("Error!  " + err.stack);
     } else {
-        return res.rows;
         printResults(res.rows);
+        return res.rows;
     }
     });
     return;
@@ -94,8 +94,8 @@ async function getByAnimalName(animal_name) {
     if (err) {
         console.log("Error!  " + err.stack);
     } else {
-        return res.rows;
         printResults(res.rows);
+        return res.rows;
     }
     });
     return;
@@ -118,8 +118,8 @@ async function getByAnimalsByCityName(city_name) {
     if (err) {
         console.log("Error!  " + err.stack);
     } else {
-        return res.rows;
         printResults(res.rows);
+        return res.rows;
     }
     });
     return;
@@ -142,8 +142,8 @@ async function getByAnimalsByStateName(state_name) {
     if (err) {
         console.log("Error!  " + err.stack);
     } else {
-        return res.rows;
         printResults(res.rows);
+        return res.rows;
     }
     });
     return;
