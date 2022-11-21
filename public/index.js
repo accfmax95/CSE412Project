@@ -28,6 +28,52 @@ const client = new Client({
     port: process.env.PGPORT
 });
 
+//Apply this function to a submit button
+function submitQuery() {
+
+    //get elementbyId for queryType and value
+    queryType = document.getElementById("querySelect").value;
+
+    // %% Need to create an element for this %%
+    value = document.getElementById("querySelect").value;
+
+    if (queryType === "id") {
+        client.connect(err => {
+            if (err) {
+                console.error('Connection Error', err.stack)
+            } else {
+                getByAnimalID(value);
+            }
+        });
+    } else if (queryType === "name") {
+        client.connect(err => {
+            if (err) {
+                console.error('Connection Error', err.stack)
+            } else {
+                getByAnimalName(value);
+            }
+        });
+    } else if (queryType === "city") {
+        client.connect(err => {
+            if (err) {
+                console.error('Connection Error', err.stack)
+            } else {
+                getByAnimalsByCityName(value);
+            }
+        });
+    } else if (queryType === "state") {
+        client.connect(err => {
+            if (err) {
+                console.error('Connection Error', err.stack)
+            } else {
+                getByAnimalsByStateName(value);
+            }
+        });
+    } else {
+        console.log("Error. Unable to match query");
+    }
+}
+
 client.connect(err => {
     if (err) {
       console.error('connection error', err.stack)
