@@ -13,8 +13,22 @@ app.use(express.static("public"));
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });
+app.get("/query/byId", function (req, res) {
+    // getByAnimalID(animalID)
+    //build response
+    //res.send(response)
+    console.log("Animal ID: " + req.query.id);
+    console.log(getByAnimalID(req.query.id));
+    new Promise(function(resolve, reject) {
+        if(getByAnimalID(req.query.id)) {
+            resolve(res.send(getByAnimalID(req.query.id)));
+        } else {
+            reject();
+        }
+    });
+});
 app.listen(process.env.PORT || 3000, function () {
-    console.log("Server is running on localhost3000 or heroku port");
+    console.log("Server is running on localhost:3000 or heroku port");
 });
 
 const { Client } = require("pg");
@@ -28,67 +42,23 @@ const client = new Client({
     port: process.env.PGPORT
 });
 
-//Apply this function to a submit button
-function submitQuery() {
-
-    //get elementbyId for queryType and value
-    queryType = document.getElementById("querySelect").value;
-
-    // %% Need to create an element for this %%
-    value = document.getElementById("queryField").value;
-
-    if (queryType === "id") {
-        client.connect(err => {
-            if (err) {
-                console.error('Connection Error', err.stack)
-            } else {
-                getByAnimalID(value);
-            }
-        });
-    } else if (queryType === "name") {
-        client.connect(err => {
-            if (err) {
-                console.error('Connection Error', err.stack)
-            } else {
-                getByAnimalName(value);
-            }
-        });
-    } else if (queryType === "city") {
-        client.connect(err => {
-            if (err) {
-                console.error('Connection Error', err.stack)
-            } else {
-                getByAnimalsByCityName(value);
-            }
-        });
-    } else if (queryType === "state") {
-        client.connect(err => {
-            if (err) {
-                console.error('Connection Error', err.stack)
-            } else {
-                getByAnimalsByStateName(value);
-            }
-        });
-    } else {
-        console.log("Error. Unable to match query");
-    }
-}
 
 client.connect(err => {
     if (err) {
-      console.error('connection error', err.stack)
+        console.error('connection error', err.stack)
     } else {
-      console.log('connected')
-      for(let i = 1; i <= 20; i++) {
-        getByAnimalID(i);
-      }
-      getByAnimalName("Bison bison");
-      getByAnimalsByStateName("Manipur");
+        console.log('connected')
+        for (let i = 1; i <= 20; i++) {
+            getByAnimalID(i);
+        }
+        getByAnimalName("Bison bison");
+        getByAnimalsByStateName("Manipur");
     }
 });
 
+
 function printResults(rows) {
-    for(let i = 0; i < rows.length; i++) {
+    for (let i = 0; i < rows.length; i++) {
         console.log("---------------------------------------");
         console.log("\nID: " + rows[i].animal_id);
         console.log("\nName: " + rows[i].scientific_name);
@@ -112,15 +82,18 @@ async function getByAnimalID(animalID) {
                     ON c.state_id = s.state_id
                     WHERE a.animal_id=$1`;
     const id = [animalID];
-    client.query(query, id, (err, res) => {
-    if (err) {
-        console.log("Error!  " + err.stack);
-    } else {
-        printResults(res.rows);
-        return res.rows;
-    }
-    });
-    return;
+    let promiseResult = new Promise(function(resolve, reject) {
+        client.query(query, id, (err, res) => {
+            if (err) {
+                console.log("Error!  " + err.stack);
+                reject("Error Querying ID: " + animalID);
+            } else {
+                printResults(res.rows);
+                resolve(res.rows);
+            }
+        });
+    })
+    return promiseResult;
 }
 
 async function getByAnimalName(animal_name) {
@@ -137,13 +110,14 @@ async function getByAnimalName(animal_name) {
                     WHERE a.scientific_name=$1`;
     const id = [animal_name];
     client.query(query, id, (err, res) => {
-    if (err) {
-        console.log("Error!  " + err.stack);
-    } else {
-        printResults(res.rows);
-        return res.rows;
-    }
+        if (err) {
+            console.log("Error!  " + err.stack);
+        } else {
+            printResults(res.rows);
+            return res.rows;
+        }
     });
+    console.log("Error Querying Name");
     return;
 }
 
@@ -161,13 +135,14 @@ async function getByAnimalsByCityName(city_name) {
                     WHERE c.city_name=$1`;
     const id = [city_name];
     client.query(query, id, (err, res) => {
-    if (err) {
-        console.log("Error!  " + err.stack);
-    } else {
-        printResults(res.rows);
-        return res.rows;
-    }
+        if (err) {
+            console.log("Error!  " + err.stack);
+        } else {
+            printResults(res.rows);
+            return res.rows;
+        }
     });
+    console.log("Error Querying City");
     return;
 }
 
@@ -185,12 +160,13 @@ async function getByAnimalsByStateName(state_name) {
                     WHERE s.state_name=$1`;
     const id = [state_name];
     client.query(query, id, (err, res) => {
-    if (err) {
-        console.log("Error!  " + err.stack);
-    } else {
-        printResults(res.rows);
-        return res.rows;
-    }
+        if (err) {
+            console.log("Error!  " + err.stack);
+        } else {
+            printResults(res.rows);
+            return res.rows;
+        }
     });
+    console.log("Error Querying State");
     return;
 }
