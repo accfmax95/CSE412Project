@@ -19,13 +19,11 @@ app.get("/query/byId", function (req, res) {
     //res.send(response)
     console.log("Animal ID: " + req.query.id);
     console.log(getByAnimalID(req.query.id));
-    new Promise(function(resolve, reject) {
+    let results = new Promise(function(resolve, reject) {
         if(getByAnimalID(req.query.id)) {
-            resolve(res.send(getByAnimalID(req.query.id)));
-        } else {
-            reject();
-        }
-    });
+            resolve(getByAnimalID(req.query.id));
+        } 
+    }).then(res.send(results));
 });
 app.listen(process.env.PORT || 3000, function () {
     console.log("Server is running on localhost:3000 or heroku port");
