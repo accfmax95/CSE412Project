@@ -35,7 +35,7 @@ function submitQuery() {
     queryType = document.getElementById("querySelect").value;
 
     // %% Need to create an element for this %%
-    value = document.getElementById("querySelect").value;
+    value = document.getElementById("queryField").value;
 
     if (queryType === "id") {
         client.connect(err => {
