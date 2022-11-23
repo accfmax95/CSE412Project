@@ -20,11 +20,11 @@ function submitQuery() {
             .then((response) => response.json())
             .then((data) => console.log(data));
     } else if (queryType === "3") {
-        fetch("/query/byCity?city=" + value)
+        fetch("/query/byState?state=" + value)
             .then((response) => response.json())
             .then((data) => console.log(data));
     } else if (queryType === "4") {
-        fetch("/query/byState?state=" + value)
+        fetch("/query/byCity?city=" + value)
             .then((response) => response.json())
             .then((data) => console.log(data));
     } else {
