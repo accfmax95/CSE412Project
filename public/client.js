@@ -12,34 +12,21 @@ function submitQuery() {
     console.log("QueryField: " + value);
 
     if (queryType === "1") {
-        //getByAnimalID(value);
         fetch("/query/byId?id=" + value)
             .then((response) => response.json())
             .then((data) => console.log(data));
     } else if (queryType === "2") {
-        client.connect(err => {
-            if (err) {
-                console.error('Connection Error', err.stack)
-            } else {
-                getByAnimalName(value);
-            }
-        });
+        fetch("/query/byName?name=" + value)
+            .then((response) => response.json())
+            .then((data) => console.log(data));
     } else if (queryType === "3") {
-        client.connect(err => {
-            if (err) {
-                console.error('Connection Error', err.stack)
-            } else {
-                getByAnimalsByCityName(value);
-            }
-        });
+        fetch("/query/byCity?city=" + value)
+            .then((response) => response.json())
+            .then((data) => console.log(data));
     } else if (queryType === "4") {
-        client.connect(err => {
-            if (err) {
-                console.error('Connection Error', err.stack)
-            } else {
-                getByAnimalsByStateName(value);
-            }
-        });
+        fetch("/query/byState?state=" + value)
+            .then((response) => response.json())
+            .then((data) => console.log(data));
     } else {
         console.log("Error. Unable to match query");
     }

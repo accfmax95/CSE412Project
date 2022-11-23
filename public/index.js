@@ -13,22 +13,53 @@ app.use(express.static("public"));
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });
+
 app.get("/query/byId", function (req, res) {
-    // getByAnimalID(animalID)
-    //build response
-    //res.send(response)
     let animal;
     let results = new Promise(function(resolve, reject) {
         animal = getByAnimalID(req.query.id);
         resolve(animal);
     })
     results.then((animal) => {
-        console.log("Hit animal console log: " + animal);
         res.send(animal);
     });
 });
+
+app.get("/query/byName", function (req, res) {
+    let animal;
+    let results = new Promise(function(resolve, reject) {
+        animal = getByAnimalName(req.query.name);
+        resolve(animal);
+    })
+    results.then((animal) => {
+        res.send(animal);
+    });
+});
+
+app.get("/query/byCity", function (req, res) {
+    let animal;
+    let results = new Promise(function(resolve, reject) {
+        animal = getByAnimalsByCityName(req.query.city);
+        resolve(animal);
+    })
+    results.then((animal) => {
+        res.send(animal);
+    });
+});
+
+app.get("/query/byState", function (req, res) {
+    let animal;
+    let results = new Promise(function(resolve, reject) {
+        animal = getByAnimalsByStateName(req.query.state);
+        resolve(animal);
+    })
+    results.then((animal) => {
+        res.send(animal);
+    });
+});
+
 app.listen(process.env.PORT || 3000, function () {
-    console.log("Server is running on localhost:3000 or heroku port");
+    console.log("Server is running");
 });
 
 const { Client } = require("pg");
@@ -86,7 +117,7 @@ async function getByAnimalID(animalID) {
         client.query(query, id, (err, res) => {
             if (err) {
                 console.log("Error!  " + err.stack);
-                reject("Error Querying ID: " + animalID);
+                reject("Error Querying By ID: " + animalID);
             } else {
                 printResults(res.rows);
                 resolve(res.rows);
@@ -96,7 +127,7 @@ async function getByAnimalID(animalID) {
     return promiseResult;
 }
 
-async function getByAnimalName(animal_name) {
+async function getByAnimalName(animalName) {
 
     const query = `SELECT a.animal_id, a.scientific_name, a.life_span, ad.population, c.city_name,
                     s.state_name
@@ -108,20 +139,22 @@ async function getByAnimalName(animal_name) {
                     LEFT JOIN State AS s
                     ON c.state_id = s.state_id
                     WHERE a.scientific_name=$1`;
-    const id = [animal_name];
-    client.query(query, id, (err, res) => {
-        if (err) {
-            console.log("Error!  " + err.stack);
-        } else {
-            printResults(res.rows);
-            return res.rows;
-        }
-    });
-    console.log("Error Querying Name");
-    return;
+    const id = [animalName];
+    let promiseResult = new Promise(function(resolve, reject) {
+        client.query(query, id, (err, res) => {
+            if (err) {
+                console.log("Error!  " + err.stack);
+                reject("Error Querying By Name: " + animalName);
+            } else {
+                printResults(res.rows);
+                resolve(res.rows);
+            }
+        });
+    })
+    return promiseResult;
 }
 
-async function getByAnimalsByCityName(city_name) {
+async function getByAnimalsByCityName(cityName) {
 
     const query = `SELECT a.animal_id, a.scientific_name, a.life_span, ad.population, c.city_name,
                     s.state_name
@@ -133,20 +166,22 @@ async function getByAnimalsByCityName(city_name) {
                     LEFT JOIN State AS s
                     ON c.state_id = s.state_id
                     WHERE c.city_name=$1`;
-    const id = [city_name];
-    client.query(query, id, (err, res) => {
-        if (err) {
-            console.log("Error!  " + err.stack);
-        } else {
-            printResults(res.rows);
-            return res.rows;
-        }
-    });
-    console.log("Error Querying City");
-    return;
+    const id = [cityName];
+    let promiseResult = new Promise(function(resolve, reject) {
+        client.query(query, id, (err, res) => {
+            if (err) {
+                console.log("Error!  " + err.stack);
+                reject("Error Querying By City: " + cityName);
+            } else {
+                printResults(res.rows);
+                resolve(res.rows);
+            }
+        });
+    })
+    return promiseResult;
 }
 
-async function getByAnimalsByStateName(state_name) {
+async function getByAnimalsByStateName(stateName) {
 
     const query = `SELECT a.animal_id, a.scientific_name, a.life_span, ad.population, c.city_name,
                     s.state_name
@@ -158,15 +193,17 @@ async function getByAnimalsByStateName(state_name) {
                     LEFT JOIN State AS s
                     ON c.state_id = s.state_id
                     WHERE s.state_name=$1`;
-    const id = [state_name];
-    client.query(query, id, (err, res) => {
-        if (err) {
-            console.log("Error!  " + err.stack);
-        } else {
-            printResults(res.rows);
-            return res.rows;
-        }
-    });
-    console.log("Error Querying State");
-    return;
+    const id = [stateName];
+    let promiseResult = new Promise(function(resolve, reject) {
+        client.query(query, id, (err, res) => {
+            if (err) {
+                console.log("Error!  " + err.stack);
+                reject("Error Querying By State: " + stateName);
+            } else {
+                printResults(res.rows);
+                resolve(res.rows);
+            }
+        });
+    })
+    return promiseResult;
 }
