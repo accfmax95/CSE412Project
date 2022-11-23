@@ -17,13 +17,15 @@ app.get("/query/byId", function (req, res) {
     // getByAnimalID(animalID)
     //build response
     //res.send(response)
-    console.log("Animal ID: " + req.query.id);
-    console.log(getByAnimalID(req.query.id));
+    let animal;
     let results = new Promise(function(resolve, reject) {
-        if(getByAnimalID(req.query.id)) {
-            resolve(getByAnimalID(req.query.id));
-        } 
-    }).then(res.send(results));
+        animal = getByAnimalID(req.query.id);
+        resolve(animal);
+    })
+    results.then((animal) => {
+        console.log("Hit animal console log: " + animal);
+        res.send(animal);
+    });
 });
 app.listen(process.env.PORT || 3000, function () {
     console.log("Server is running on localhost:3000 or heroku port");
