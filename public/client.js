@@ -12,9 +12,12 @@ function submitQuery() {
     console.log("QueryField: " + value);
 
     if (queryType === "1") {
-        fetch("/query/byId?id=" + value)
+        let num = Number(value);
+        if(Number.isInteger(num)) {
+            fetch("/query/byId?id=" + value)
             .then((response) => response.json())
             .then((data) => buildResultDisplay(data));
+        }
     } else if (queryType === "2") {
         fetch("/query/byName?name=" + value)
             .then((response) => response.json())
