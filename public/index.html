@@ -24,22 +24,25 @@
     </header>
     <div id="content">
         <div class="boxes">
-            <p id="query_p">Query Type:</p>
-            <div class="select">
-                <select name="queryForm" id="querySelect">
-                    <option value="0" selected disabled hidden>Select</option>
-                    <option value="1">ID</option>
-                    <option value="2">Name</option>
-                    <option value="3">State</option>
-                    <option value="4">City</option>
-                </select>
-            </div>
-            <div class="queryInput">
-                <input type="text" id="queryField"></input>
-                <button onClick="submitQuery()">Submit</button>
-            </div>
+            <span>
+                <p id="query_p">Query Type:</p>
+                <div class="select">
+                    <select name="queryForm" id="querySelect">
+                        <option value="0" selected disabled hidden>Select</option>
+                        <option value="1">ID</option>
+                        <option value="2">Name</option>
+                        <option value="3">State</option>
+                        <option value="4">City</option>
+                    </select>
+                </div>
+                <div class="queryInput">
+                    <input type="text" id="queryField"></input>
+                    <button onClick="submitQuery()">Submit</button>
+                </div>
+            </span>
         </div>
         <div class="boxes">
+
         </div>
     </div>
 </body>

@@ -14,20 +14,67 @@ function submitQuery() {
     if (queryType === "1") {
         fetch("/query/byId?id=" + value)
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => buildResultDisplay(data));
     } else if (queryType === "2") {
         fetch("/query/byName?name=" + value)
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => buildResultDisplay(data));
     } else if (queryType === "3") {
         fetch("/query/byState?state=" + value)
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => buildResultDisplay(data));
     } else if (queryType === "4") {
         fetch("/query/byCity?city=" + value)
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => buildResultDisplay(data));
     } else {
-        console.log("Error. Unable to match query");
+        buildError();
     }
+}
+
+function buildResultDisplay(data) {
+
+    console.log(data);
+
+    if(!data.animal_id) {
+       buildError();
+    } else {
+        for(let i = 0; i < data.length; i++) {
+            let paragraph1 = document.createElement("p");
+            let resultString = document.createTextNode("Query Result (" + i + "):");
+            paragraph1.appendChild(resultString);
+            let paragraph2 = document.createElement("p");
+            let id = document.createTextNode("ID: " + data.animal_id);
+            paragraph2.appendChild(id);
+            let paragraph3 = document.createElement("p");
+            let name = document.createTextNode("Name: " + data.scientific_name);
+            paragraph3.appendChild(name);
+            let paragraph4 = document.createElement("p");
+            let city = document.createTextNode("City: " + data.city_name);
+            paragraph4.appendChild(city);
+            let paragraph5 = document.createElement("p");
+            let state = document.createTextNode("State: " + data.state_name);
+            paragraph5.appendChild(state);
+            let separateDiv = document.createElement("div");
+            separateDiv.appendChild(paragraph1);
+            separateDiv.appendChild(paragraph2);
+            separateDiv.appendChild(paragraph3);
+            separateDiv.appendChild(paragraph4);
+            separateDiv.appendChild(paragraph5);
+            let resultDiv = document.getElementById("queryResult");
+            resultsDiv.innerHTML = ""; 
+            resultDiv.append(separateDiv);
+        }
+    }
+
+}
+
+function buildError() {
+    let resultDiv = document.getElementById("queryResult");
+    resultsDiv.innerHTML = "";
+    let errorP = document.createElement("p");
+    let errorMessage = document.createTextNode("Error. Unable to match query");
+    errorP.appendChild(errorMessage); 
+    resultDiv.append(errorP);
+    console.log("Error. Unable to match query");
 }

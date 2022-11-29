@@ -89,3 +89,7 @@ select
     color: var(--black);
     border-bottom: 10em;
 }
+
+.child {
+    display: inline-block;
+}
