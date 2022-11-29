@@ -25,9 +25,9 @@
     <div id="content">
         <div class="boxes">
             <span>
-                <p id="query_p">Query Type:</p>
-                <div class="select">
-                    <select name="queryForm" id="querySelect">
+                <p id="query_p" class="child">Query Type:</p>
+                <div class="select child">
+                    <select class="child" name="queryForm" id="querySelect">
                         <option value="0" selected disabled hidden>Select</option>
                         <option value="1">ID</option>
                         <option value="2">Name</option>
@@ -35,13 +35,13 @@
                         <option value="4">City</option>
                     </select>
                 </div>
-                <div class="queryInput">
+                <div class="queryInput child">
                     <input type="text" id="queryField"></input>
                     <button onClick="submitQuery()">Submit</button>
                 </div>
             </span>
         </div>
-        <div class="boxes">
+        <div class="boxes" id="queryResult">
 
         </div>
     </div>
