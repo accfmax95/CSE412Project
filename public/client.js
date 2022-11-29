@@ -62,7 +62,7 @@ function buildResultDisplay(data) {
             separateDiv.appendChild(paragraph4);
             separateDiv.appendChild(paragraph5);
             let resultDiv = document.getElementById("queryResult");
-            resultsDiv.innerHTML = ""; 
+            resultDiv.innerHTML = ""; 
             resultDiv.append(separateDiv);
         }
     }
@@ -71,7 +71,7 @@ function buildResultDisplay(data) {
 
 function buildError() {
     let resultDiv = document.getElementById("queryResult");
-    resultsDiv.innerHTML = "";
+    resultDiv.innerHTML = "";
     let errorP = document.createElement("p");
     let errorMessage = document.createTextNode("Error. Unable to match query");
     errorP.appendChild(errorMessage); 
