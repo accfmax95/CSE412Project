@@ -14,21 +14,21 @@ function submitQuery() {
     if (queryType === "1") {
         fetch("/query/byId?id=" + value)
             .then((response) => response.json())
-            .then((data) => buildResultDisplay(data));
+            .then((data) => buildResultDisplay2(data));
     } else if (queryType === "2") {
         fetch("/query/byName?name=" + value)
             .then((response) => response.json())
-            .then((data) => buildResultDisplay(data));
+            .then((data) => buildResultDisplay2(data));
     } else if (queryType === "3") {
         fetch("/query/byState?state=" + value)
             .then((response) => response.json())
-            .then((data) => buildResultDisplay(data));
+            .then((data) => buildResultDisplay2(data));
     } else if (queryType === "4") {
         fetch("/query/byCity?city=" + value)
             .then((response) => response.json())
-            .then((data) => buildResultDisplay(data));
+            .then((data) => buildResultDisplay2(data));
     } else {
-        buildError();
+        buildError2();
     }
 }
 
@@ -66,7 +66,34 @@ function buildResultDisplay(data) {
             resultDiv.append(separateDiv);
         }
     }
+}
 
+function buildResultDisplay2(data) {
+
+    let count = 1;
+
+    console.log(data);
+
+    htmlToAdd = "";
+
+    data.array.forEach(query => {
+        let result =`<div>
+                            <p>Query Result (${count})</p>
+                            <p>ID: ${data.animal_id}</p>
+                            <p>Name: ${data.scientific_name}</p>
+                            <p>City: ${data.city_name}</p>
+                            <p>State: ${data.state_name}</p>
+                          </div>`
+        count++;
+        htmlToAdd += result; 
+    });
+
+    if(htmlToAdd == "") {
+        buildError2();
+    } else {
+        let resultDiv = document.getElementById("queryResult");
+        resultDiv.innerHTML = htmlToAdd;
+    }
 }
 
 function buildError() {
@@ -77,4 +104,10 @@ function buildError() {
     errorP.appendChild(errorMessage); 
     resultDiv.append(errorP);
     console.log("Error. Unable to match query");
+}
+
+function buildError2() {
+    let error = `<p>Error. Unable to match query</p>`
+    let resultDiv = document.getElementById("queryResult");
+    resultDiv.innerHTML = error;
 }
