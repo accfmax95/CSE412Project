@@ -13,8 +13,9 @@ function submitQuery() {
 
     if (queryType === "1") {
         let num = Number(value);
+        console.log("Value of string: " + value);
         if(Number.isInteger(num)) {
-            fetch("/query/byId?id=" + value)
+            fetch("/query/byId?id=" + num)
             .then((response) => response.json())
             .then((data) => buildResultDisplay(data));
         } else {
