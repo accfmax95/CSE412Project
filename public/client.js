@@ -76,14 +76,14 @@ function buildResultDisplay2(data) {
 
     htmlToAdd = "";
 
-    data.array.forEach(query => {
-        let result =`<div>
+    data.forEach(query => {
+        let result =`   <div>
                             <p>Query Result (${count})</p>
-                            <p>ID: ${data.animal_id}</p>
-                            <p>Name: ${data.scientific_name}</p>
-                            <p>City: ${data.city_name}</p>
-                            <p>State: ${data.state_name}</p>
-                          </div>`
+                            <p>ID: ${query.animal_id}</p>
+                            <p>Name: ${query.scientific_name}</p>
+                            <p>City: ${query.city_name}</p>
+                            <p>State: ${query.state_name}</p>
+                        </div>`
         count++;
         htmlToAdd += result; 
     });
