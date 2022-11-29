@@ -17,6 +17,8 @@ function submitQuery() {
             fetch("/query/byId?id=" + value)
             .then((response) => response.json())
             .then((data) => buildResultDisplay(data));
+        } else {
+            buildError();
         }
     } else if (queryType === "2") {
         fetch("/query/byName?name=" + value)
